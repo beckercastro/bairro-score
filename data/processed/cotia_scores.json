@@ -1,0 +1,92 @@
+{
+  "caucaia_do_alto": {
+    "nome": "Caucaia Do Alto",
+    "municipio": "Cotia",
+    "score_geral": 5.5,
+    "scores": {
+      "seguranca": 4.5,
+      "custo": 7.8,
+      "educacao": 8.2,
+      "transporte": 2.1
+    },
+    "dados": {
+      "preco_m2_casa": 2500,
+      "preco_m2_terreno": 450,
+      "aluguel_medio_2q": 1100,
+      "distancia_metro_km": 35,
+      "tipo_predominante": "casas e terrenos rurais/semi-rurais"
+    }
+  },
+  "granja_viana": {
+    "nome": "Granja Viana",
+    "municipio": "Cotia",
+    "score_geral": 5.4,
+    "scores": {
+      "seguranca": 4.5,
+      "custo": 1.8,
+      "educacao": 8.2,
+      "transporte": 6.6
+    },
+    "dados": {
+      "preco_m2_casa": 6500,
+      "preco_m2_terreno": 1800,
+      "aluguel_medio_2q": 2800,
+      "distancia_metro_km": 15,
+      "tipo_predominante": "casas em condomínio fechado"
+    }
+  },
+  "centro": {
+    "nome": "Centro",
+    "municipio": "Cotia",
+    "score_geral": 5.8,
+    "scores": {
+      "seguranca": 4.5,
+      "custo": 5.2,
+      "educacao": 8.2,
+      "transporte": 5.5
+    },
+    "dados": {
+      "preco_m2_casa": 4200,
+      "preco_m2_terreno": 1200,
+      "aluguel_medio_2q": 1600,
+      "distancia_metro_km": 20,
+      "tipo_predominante": "apartamentos e casas"
+    }
+  },
+  "jardim_da_gloria": {
+    "nome": "Jardim Da Gloria",
+    "municipio": "Cotia",
+    "score_geral": 6.0,
+    "scores": {
+      "seguranca": 4.5,
+      "custo": 6.7,
+      "educacao": 8.2,
+      "transporte": 5.0
+    },
+    "dados": {
+      "preco_m2_casa": 3200,
+      "preco_m2_terreno": 800,
+      "aluguel_medio_2q": 1300,
+      "distancia_metro_km": 22,
+      "tipo_predominante": "casas"
+    }
+  },
+  "parque_sao_george": {
+    "nome": "Parque Sao George",
+    "municipio": "Cotia",
+    "score_geral": 6.0,
+    "scores": {
+      "seguranca": 4.5,
+      "custo": 7.0,
+      "educacao": 8.2,
+      "transporte": 4.8
+    },
+    "dados": {
+      "preco_m2_casa": 3000,
+      "preco_m2_terreno": 700,
+      "aluguel_medio_2q": 1200,
+      "distancia_metro_km": 23,
+      "tipo_predominante": "casas"
+    }
+  }
+}
