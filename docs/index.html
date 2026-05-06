@@ -12,7 +12,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 .info h3{margin:0 0 2px;font-size:16px}
 .info .region{font-size:11px;color:#888;margin-bottom:10px}
 .info .score-big{font-size:32px;font-weight:700;margin:4px 0}
-.info .scores{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:10px 0}
+.info .scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin:10px 0}
 .info .sc{background:#f5f5f5;padding:6px 8px;border-radius:6px;font-size:12px}
 .info .sc span{font-weight:700;float:right}
 .info .dados{border-top:1px solid #eee;padding-top:8px;margin-top:8px;font-size:12px;color:#555}
@@ -39,6 +39,13 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 <div class="item"><i style="background:#84cc16"></i>8-9 Bom</div>
 <div class="item"><i style="background:#f59e0b"></i>7-8 Regular</div>
 <div class="item"><i style="background:#ef4444"></i>&lt;7 Ruim</div>
+<hr style="margin:10px 0;border:none;border-top:1px solid #eee">
+<h4>Scores individuais</h4>
+<div class="item">🛡️ Segurança — roubos e homicídios</div>
+<div class="item">💰 Custo — preço do m²</div>
+<div class="item">🚇 Transporte — distância ao metrô</div>
+<div class="item">🌳 Áreas verdes — m² por habitante</div>
+<div class="item">🏪 Comércio — mercados e lojas/km²</div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -69,12 +76,16 @@ function addDistricts(geojson) {
           '<div class="sc">🛡️ Segurança <span>'+p.score_seguranca+'</span></div>'+
           '<div class="sc">💰 Custo <span>'+p.score_custo+'</span></div>'+
           '<div class="sc">🚇 Transporte <span>'+p.score_transporte+'</span></div>'+
+          '<div class="sc">🌳 Áreas verdes <span>'+(p.score_verde||'?')+'</span></div>'+
+          '<div class="sc">🏪 Comércio <span>'+(p.score_comercio||'?')+'</span></div>'+
           '</div>'+
           '<div class="dados">'+
           '<p>🏠 Preço m²: R$ '+(p.preco_m2||0).toLocaleString('pt-BR')+'</p>'+
           '<p>🔫 Roubos: '+p.roubos_100k+'/100k hab</p>'+
           '<p>💀 Homicídios: '+p.homicidios_100k+'/100k hab</p>'+
           '<p>🚉 Metrô: '+p.dist_metro_km+' km</p>'+
+          '<p>🌳 Verde: '+(p.area_verde_m2_hab||'?')+' m²/hab</p>'+
+          '<p>🏪 Comércio: '+(p.comercio_km2||'?')+'/km²</p>'+
           '</div>';
       });
       layer.on('mouseout', function(e) { layer.setStyle({weight:1.5, fillOpacity:0.55}); });
