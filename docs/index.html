@@ -1,146 +1,73 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BairroScore - Cotia, SP</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-        #map { width: 100%; height: 100vh; }
-        .score-popup { min-width: 300px; }
-        .score-popup h3 { margin-bottom: 4px; font-size: 18px; color: #1a1a1a; }
-        .score-popup .subtitle { font-size: 12px; color: #888; margin-bottom: 10px; }
-        .score-popup .score-geral {
-            font-size: 36px; font-weight: 700;
-            margin: 8px 0; padding: 8px 16px;
-            border-radius: 8px; display: inline-block;
-        }
-        .score-popup .scores-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 6px; margin: 12px 0;
-        }
-        .score-popup .score-item {
-            background: #f5f5f5; padding: 8px 10px;
-            border-radius: 6px; font-size: 13px;
-        }
-        .score-popup .score-item span { font-weight: 700; float: right; }
-        .score-popup .dados { font-size: 12px; color: #555; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
-        .score-popup .dados p { margin: 4px 0; }
-        .legend {
-            position: fixed; bottom: 20px; left: 20px;
-            background: white; padding: 16px 20px; border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000;
-            font-size: 13px;
-        }
-        .legend h4 { margin-bottom: 10px; font-size: 14px; }
-        .legend-item { display: flex; align-items: center; margin: 6px 0; }
-        .legend-color { width: 24px; height: 16px; border-radius: 4px; margin-right: 10px; border: 1px solid rgba(0,0,0,0.1); }
-        .header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: white; padding: 12px 24px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .header h1 { font-size: 22px; font-weight: 700; }
-        .header h1 span { color: #10b981; }
-        .header p { font-size: 13px; color: #666; }
-        .tooltip-label {
-            background: none !important; border: none !important; box-shadow: none !important;
-            font-weight: 700; font-size: 12px; color: #1a1a1a;
-            text-shadow: 0 0 4px white, 0 0 4px white, 0 0 4px white, 0 0 4px white;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BairroScore</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+#map{width:100%;height:100vh}
+.info{position:fixed;top:55px;right:10px;background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.18);z-index:1000;min-width:250px;font-size:13px;max-width:280px}
+.info h3{margin:0 0 2px;font-size:16px}
+.info .region{font-size:11px;color:#888;margin-bottom:10px}
+.info .score-big{font-size:32px;font-weight:700;margin:4px 0}
+.info .scores{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:10px 0}
+.info .sc{background:#f5f5f5;padding:6px 8px;border-radius:6px;font-size:12px}
+.info .sc span{font-weight:700;float:right}
+.info .dados{border-top:1px solid #eee;padding-top:8px;margin-top:8px;font-size:12px;color:#555}
+.info .dados p{margin:3px 0}
+.legend{position:fixed;bottom:20px;left:20px;background:#fff;padding:14px 18px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,.15);z-index:1000;font-size:12px}
+.legend h4{margin-bottom:8px}
+.legend i{width:18px;height:12px;display:inline-block;margin-right:6px;border-radius:2px}
+.legend .item{margin:4px 0}
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff;padding:10px 20px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:20px;font-weight:700}
+.header h1 span{color:#10b981}
+.header p{font-size:12px;color:#666}
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>Bairro<span>Score</span></h1>
-        <p>📍 Cotia, SP — Clique numa região pra ver detalhes</p>
-    </div>
-
-    <div id="map"></div>
-
-    <div class="legend">
-        <h4>🎯 Score Geral</h4>
-        <div class="legend-item"><div class="legend-color" style="background:#10b981"></div> 7.0 – 10 Excelente</div>
-        <div class="legend-item"><div class="legend-color" style="background:#84cc16"></div> 6.0 – 7.0 Bom</div>
-        <div class="legend-item"><div class="legend-color" style="background:#f59e0b"></div> 5.0 – 6.0 Regular</div>
-        <div class="legend-item"><div class="legend-color" style="background:#ef4444"></div> 0 – 5.0 Ruim</div>
-    </div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="bairros_data.js"></script>
-    <script>
-        function getColor(score) {
-            if (score >= 7) return '#10b981';
-            if (score >= 6) return '#84cc16';
-            if (score >= 5) return '#f59e0b';
-            return '#ef4444';
-        }
-
-        const map = L.map('map').setView([-23.66, -46.94], 12);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
-
-        // Limite do município (borda)
-        L.polygon(cotiaBoundary, {
-            color: '#444',
-            weight: 2.5,
-            dashArray: '6, 4',
-            fillColor: 'transparent',
-            fillOpacity: 0,
-            interactive: false
-        }).addTo(map);
-
-        // Regiões coloridas preenchendo todo o município
-        bairros.forEach(b => {
-            const color = getColor(b.score_geral);
-
-            const poly = L.polygon(b.polygon, {
-                color: '#fff',
-                weight: 2,
-                fillColor: color,
-                fillOpacity: 0.45,
-                smoothFactor: 1
-            }).addTo(map);
-
-            poly.bindPopup(`
-                <div class="score-popup">
-                    <h3>${b.nome}</h3>
-                    <div class="subtitle">Cotia, SP</div>
-                    <div class="score-geral" style="background:${color}20; color:${color}; border: 2px solid ${color}">
-                        ${b.score_geral}
-                    </div>
-                    <span style="font-size:13px; color:#666; margin-left:8px;">/ 10</span>
-                    <div class="scores-grid">
-                        <div class="score-item">🛡️ Segurança <span>${b.scores.seguranca}</span></div>
-                        <div class="score-item">💰 Custo <span>${b.scores.custo}</span></div>
-                        <div class="score-item">📚 Educação <span>${b.scores.educacao}</span></div>
-                        <div class="score-item">🚇 Transporte <span>${b.scores.transporte}</span></div>
-                    </div>
-                    <div class="dados">
-                        <p>🏠 <strong>Preço m²:</strong> ${b.dados.preco_m2}</p>
-                        <p>🔑 <strong>Aluguel:</strong> ${b.dados.aluguel}</p>
-                        <p>🏘️ <strong>Tipo:</strong> ${b.dados.tipo}</p>
-                        <p>🚉 <strong>Metrô:</strong> ${b.dados.dist_metro}</p>
-                    </div>
-                </div>
-            `);
-
-            poly.on('mouseover', function() { this.setStyle({ fillOpacity: 0.65, weight: 3 }); });
-            poly.on('mouseout', function() { this.setStyle({ fillOpacity: 0.45, weight: 2 }); });
-
-            const center = poly.getBounds().getCenter();
-            poly.bindTooltip(`${b.score_geral} · ${b.nome}`, {
-                permanent: true, direction: 'center', className: 'tooltip-label'
-            });
-        });
-
-        // Fit map to Cotia bounds
-        map.fitBounds(L.polygon(cotiaBoundary).getBounds().pad(0.05));
-    </script>
+<div class="header"><h1>Bairro<span>Score</span></h1><p>São Paulo + Cotia — 100 distritos · Dados reais 2024</p></div>
+<div id="map"></div>
+<div class="info" id="info"><h3>BairroScore</h3><p>Passe o mouse num distrito</p></div>
+<div class="legend"><h4>Score Geral</h4>
+<div class="item"><i style="background:#10b981"></i>7+ Excelente</div>
+<div class="item"><i style="background:#84cc16"></i>5-7 Bom</div>
+<div class="item"><i style="background:#f59e0b"></i>3-5 Médio</div>
+<div class="item"><i style="background:#ef4444"></i>0-3 Ruim</div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="all_districts.js"></script>
+<script>
+var map=L.map('map').setView([-23.6,-46.75],10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
+function gc(s){return s>=7?'#10b981':s>=5?'#84cc16':s>=3?'#f59e0b':'#ef4444'}
+var info=document.getElementById('info');
+var gl=L.geoJSON(window.districts,{
+  style:function(f){var s=f.properties.score_geral||5;return{fillColor:gc(s),weight:1.5,color:'#fff',fillOpacity:0.55}},
+  onEachFeature:function(f,layer){
+    layer.on('mouseover',function(e){
+      e.target.setStyle({weight:3,fillOpacity:0.8});
+      var p=f.properties,s=p.score_geral||5;
+      info.innerHTML='<h3>'+p.nm_distrito_municipal+'</h3>'+
+        '<div class="region">'+(p.municipio||'São Paulo')+' · '+(p.nm_regiao_05||'')+'</div>'+
+        '<div class="score-big" style="color:'+gc(s)+'">'+s.toFixed(1)+'/10</div>'+
+        '<div class="scores">'+
+        '<div class="sc">🛡️ Segurança <span>'+p.score_seguranca+'</span></div>'+
+        '<div class="sc">💰 Custo <span>'+p.score_custo+'</span></div>'+
+        '<div class="sc">🚇 Transporte <span>'+p.score_transporte+'</span></div>'+
+        '</div>'+
+        '<div class="dados">'+
+        '<p>🏠 Preço m²: R$ '+(p.preco_m2||0).toLocaleString('pt-BR')+'</p>'+
+        '<p>🔫 Roubos: '+p.roubos_100k+'/100k hab</p>'+
+        '<p>💀 Homicídios: '+p.homicidios_100k+'/100k hab</p>'+
+        '<p>🚉 Metrô: '+p.dist_metro_km+' km</p>'+
+        '</div>';
+    });
+    layer.on('mouseout',function(e){gl.resetStyle(e.target)});
+  }
+}).addTo(map);
+</script>
 </body>
 </html>
