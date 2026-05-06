@@ -22,11 +22,13 @@ Você recebe dados brutos coletados pelo Data Collector e transforma em scores n
 | Áreas verdes | 20% | SVMA | m² verde por habitante |
 | Comércio | 15% | Junta Comercial | estabelecimentos por km² |
 
-### Thresholds de cor:
-- 9+ → verde (#10b981) — Excelente
-- 8-9 → verde claro (#84cc16) — Bom
-- 7-8 → amarelo (#f59e0b) — Regular
-- <7 → vermelho (#ef4444) — Ruim
+### Thresholds de cor (6 faixas):
+- 8+ → #10b981 (verde escuro) — Excelente
+- 7-8 → #34d399 (verde claro) — Muito bom
+- 6-7 → #84cc16 (limão) — Bom
+- 5-6 → #eab308 (amarelo) — Regular
+- 4-5 → #f97316 (laranja) — Ruim
+- <4 → #ef4444 (vermelho) — Péssimo
 
 ### Resultados v2 (SP capital):
 - Top: Jardim Paulista (7.6), Moema (7.5), Pinheiros (7.4)

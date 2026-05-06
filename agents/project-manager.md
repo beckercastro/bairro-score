@@ -122,12 +122,19 @@ docs/
 
 ### Decisões técnicas:
 - Fonte única de dados: municipios/*.json (mapa + páginas leem do mesmo arquivo)
+- Função de cor `gc()` definida em AMBOS index.html e distrito.html (mesma lógica)
 - Score geral: segurança 40% + transporte 25% + áreas verdes 20% + comércio 15%
 - Custo (preço m²) aparece como dado mas NÃO entra no score geral (é preferência pessoal)
-- Thresholds de cor: 9+ verde, 8-9 verde claro, 7-8 amarelo, <7 vermelho
+- 6 faixas de cor: 8+ verde escuro, 7-8 verde claro, 6-7 limão, 5-6 amarelo, 4-5 laranja, <4 vermelho
 - Hosting: GitHub Pages (grátis)
 - Mapa: Leaflet + GeoJSON oficial do GeoSampa (polígonos reais)
 - Coordenadas: convertidas de EPSG:31983 → WGS84 via pyproj
+- distrito.html carrega de TODOS os municípios via manifest (funciona pra SP e Cotia)
+
+### Regra de ouro:
+- NUNCA duplicar dados. Uma fonte só (municipios/*.json).
+- Qualquer mudança de score/cor deve ser feita na função gc() em AMBOS os HTMLs.
+- Ao regenerar dados, NÃO precisa regenerar páginas (elas leem do JSON dinamicamente).
 
 ## Regras de Operação
 
