@@ -30,44 +30,58 @@ h1{font-size:24px;margin-bottom:4px}
 <div id="content">Carregando...</div>
 </div>
 <script>
-function gc(s){return s>=9?'#10b981':s>=8?'#84cc16':s>=7?'#f59e0b':'#ef4444'}
-function lb(s){return s>=9?'Excelente':s>=8?'Bom':s>=7?'Regular':'Ruim'}
+function gc(s){return s>=8?'#10b981':s>=7?'#34d399':s>=6?'#84cc16':s>=5?'#eab308':s>=4?'#f97316':'#ef4444';}
+function lb(s){return s>=8?'Excelente':s>=7?'Muito bom':s>=6?'Bom':s>=5?'Regular':s>=4?'Ruim':'Péssimo';}
+function titleCase(str){return str.toLowerCase().replace(/\b\w/g,function(l){return l.toUpperCase()});}
 
 var slug = new URLSearchParams(window.location.search).get('d');
-if(!slug){document.getElementById('content').innerHTML='<p>Distrito não encontrado</p>';}
-else{
-  fetch('municipios/sao-paulo.json')
+if(!slug){
+  document.getElementById('content').innerHTML='<p>Distrito não encontrado. <a href="./">Voltar ao mapa</a></p>';
+} else {
+  // Carregar manifest e buscar em todos os municípios
+  fetch('municipios/manifest.json')
     .then(function(r){return r.json()})
-    .then(function(data){
-      var feat = data.features.find(function(f){
-        return f.properties.nm_distrito_municipal.toLowerCase().replace(/ /g,'-') === slug;
-      });
-      if(!feat){document.getElementById('content').innerHTML='<p>Distrito não encontrado</p>';return;}
-      var p = feat.properties;
-      var sg = p.score_geral;
-      var color = gc(sg);
-      document.title = 'Morar em '+p.nm_distrito_municipal.replace(/\b\w/g,function(l){return l.toUpperCase()})+' — Score '+sg+'/10 | BairroScore';
-      var nome = p.nm_distrito_municipal.replace(/\b\w/g,function(l){return l.toUpperCase()});
-      document.getElementById('content').innerHTML = 
+    .then(function(manifest){
+      var promises = manifest.map(function(m){return fetch(m.arquivo).then(function(r){return r.json()})});
+      return Promise.all(promises);
+    })
+    .then(function(results){
+      var feat = null;
+      for(var i=0;i<results.length;i++){
+        var found = results[i].features.find(function(f){
+          return f.properties.nm_distrito_municipal.toLowerCase().replace(/ /g,'-') === slug;
+        });
+        if(found){feat=found;break;}
+      }
+      if(!feat){
+        document.getElementById('content').innerHTML='<p>Distrito "'+slug+'" não encontrado. <a href="./">Voltar ao mapa</a></p>';
+        return;
+      }
+      var p=feat.properties;
+      var sg=p.score_geral;
+      var color=gc(sg);
+      var nome=titleCase(p.nm_distrito_municipal);
+      document.title='Morar em '+nome+' — Score '+sg+'/10 | BairroScore';
+      document.getElementById('content').innerHTML=
         '<h1>'+nome+'</h1>'+
-        '<p class="subtitle">São Paulo, SP · '+(p.nm_regiao_05||'')+'</p>'+
+        '<p class="subtitle">'+(p.municipio||'São Paulo')+', SP · '+(p.nm_regiao_05||'')+'</p>'+
         '<div class="score-card">'+
         '<span class="score-big" style="color:'+color+'">'+sg+'</span>'+
         '<span class="score-label"> / 10 — '+lb(sg)+'</span>'+
         '<div class="scores-grid">'+
-        '<div class="sc"><div class="val">'+p.score_seguranca+'</div><div class="lbl">🛡️ Segurança</div></div>'+
-        '<div class="sc"><div class="val">'+p.score_custo+'</div><div class="lbl">💰 Custo</div></div>'+
-        '<div class="sc"><div class="val">'+p.score_transporte+'</div><div class="lbl">🚇 Transporte</div></div>'+
-        '<div class="sc"><div class="val">'+(p.score_verde||'?')+'</div><div class="lbl">🌳 Áreas verdes</div></div>'+
-        '<div class="sc"><div class="val">'+(p.score_comercio||'?')+'</div><div class="lbl">🏪 Comércio</div></div>'+
+        '<div class="sc"><div class="val" style="color:'+gc(p.score_seguranca)+'">'+p.score_seguranca+'</div><div class="lbl">🛡️ Segurança</div></div>'+
+        '<div class="sc"><div class="val" style="color:'+gc(p.score_custo)+'">'+p.score_custo+'</div><div class="lbl">💰 Custo</div></div>'+
+        '<div class="sc"><div class="val" style="color:'+gc(p.score_transporte)+'">'+p.score_transporte+'</div><div class="lbl">🚇 Transporte</div></div>'+
+        '<div class="sc"><div class="val" style="color:'+gc(p.score_verde||0)+'">'+(p.score_verde||'—')+'</div><div class="lbl">🌳 Áreas verdes</div></div>'+
+        '<div class="sc"><div class="val" style="color:'+gc(p.score_comercio||0)+'">'+(p.score_comercio||'—')+'</div><div class="lbl">🏪 Comércio</div></div>'+
         '</div></div>'+
         '<div class="dados"><h2>Dados de '+nome+'</h2>'+
         '<p>🏠 <span>Preço m²:</span> R$ '+(p.preco_m2||0).toLocaleString('pt-BR')+'</p>'+
-        '<p>🔫 <span>Roubos:</span> '+p.roubos_100k+'/100k habitantes</p>'+
-        '<p>💀 <span>Homicídios:</span> '+p.homicidios_100k+'/100k habitantes</p>'+
-        '<p>🚉 <span>Metrô:</span> '+p.dist_metro_km+' km</p>'+
-        '<p>🌳 <span>Área verde:</span> '+(p.area_verde_m2_hab||'?')+' m²/habitante</p>'+
-        '<p>🏪 <span>Comércio:</span> '+(p.comercio_km2||'?')+' estabelecimentos/km²</p>'+
+        '<p>🔫 <span>Roubos:</span> '+(p.roubos_100k||'—')+'/100k habitantes</p>'+
+        '<p>💀 <span>Homicídios:</span> '+(p.homicidios_100k||'—')+'/100k habitantes</p>'+
+        '<p>🚉 <span>Metrô:</span> '+(p.dist_metro_km||'—')+' km</p>'+
+        '<p>🌳 <span>Área verde:</span> '+(p.area_verde_m2_hab||'—')+' m²/habitante</p>'+
+        '<p>🏪 <span>Comércio:</span> '+(p.comercio_km2||'—')+' estabelecimentos/km²</p>'+
         '</div>'+
         '<div class="nav" style="margin-top:30px;text-align:center">'+
         '<p style="color:#999;font-size:11px">Dados: SSP-SP 2024 · FipeZap 2025 · SVMA · Junta Comercial</p>'+
