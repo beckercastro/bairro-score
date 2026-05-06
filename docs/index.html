@@ -35,17 +35,17 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 <div id="map"></div>
 <div class="info" id="info"><h3>BairroScore</h3><p>Passe o mouse num distrito</p></div>
 <div class="legend"><h4>Score Geral</h4>
-<div class="item"><i style="background:#10b981"></i>7+ Excelente</div>
-<div class="item"><i style="background:#84cc16"></i>5-7 Bom</div>
-<div class="item"><i style="background:#f59e0b"></i>3-5 Médio</div>
-<div class="item"><i style="background:#ef4444"></i>0-3 Ruim</div>
+<div class="item"><i style="background:#10b981"></i>9+ Excelente</div>
+<div class="item"><i style="background:#84cc16"></i>8-9 Bom</div>
+<div class="item"><i style="background:#f59e0b"></i>7-8 Regular</div>
+<div class="item"><i style="background:#ef4444"></i>&lt;7 Ruim</div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 var map = L.map('map').setView([-23.6, -46.75], 10);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'OSM'}).addTo(map);
 
-function gc(s) { return s>=7?'#10b981':s>=5?'#84cc16':s>=3?'#f59e0b':'#ef4444'; }
+function gc(s) { return s>=9?'#10b981':s>=8?'#84cc16':s>=7?'#f59e0b':'#ef4444'; }
 
 var info = document.getElementById('info');
 var stats = document.getElementById('stats');
