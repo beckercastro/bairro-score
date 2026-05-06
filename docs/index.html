@@ -78,6 +78,11 @@ function addDistricts(geojson) {
           '</div>';
       });
       layer.on('mouseout', function(e) { layer.setStyle({weight:1.5, fillOpacity:0.55}); });
+      layer.on('click', function() {
+        var mun = f.properties.municipio || 'São Paulo';
+        var slug = f.properties.nm_distrito_municipal.toLowerCase().replace(/ /g,'-');
+        if (mun === 'São Paulo') window.location.href = 'sp/' + slug + '.html';
+      });
     }
   }).addTo(map);
   totalDistritos += geojson.features.length;
