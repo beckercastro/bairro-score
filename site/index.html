@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BairroScore - Mapa de Cotia</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        #map { width: 100%; height: 100vh; }
+        .score-popup { min-width: 280px; }
+        .score-popup h3 { margin-bottom: 8px; font-size: 18px; color: #1a1a1a; }
+        .score-popup .score-geral { 
+            font-size: 32px; font-weight: 700; 
+            margin: 8px 0; padding: 8px 16px; 
+            border-radius: 8px; display: inline-block;
+        }
+        .score-popup .scores-grid { 
+            display: grid; grid-template-columns: 1fr 1fr; 
+            gap: 6px; margin: 12px 0; 
+        }
+        .score-popup .score-item { 
+            background: #f5f5f5; padding: 6px 10px; 
+            border-radius: 6px; font-size: 13px; 
+        }
+        .score-popup .score-item span { font-weight: 600; float: right; }
+        .score-popup .dados { font-size: 12px; color: #666; margin-top: 8px; }
+        .score-popup .dados p { margin: 3px 0; }
+        .legend { 
+            position: fixed; bottom: 20px; left: 20px; 
+            background: white; padding: 16px; border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000;
+            font-size: 13px;
+        }
+        .legend h4 { margin-bottom: 8px; }
+        .legend-item { display: flex; align-items: center; margin: 4px 0; }
+        .legend-color { width: 20px; height: 20px; border-radius: 50%; margin-right: 8px; }
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: white; padding: 12px 24px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .header h1 { font-size: 20px; }
+        .header h1 span { color: #10b981; }
+        .header p { font-size: 13px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bairro<span>Score</span></h1>
+        <p>Cotia, SP — 5 bairros analisados</p>
+    </div>
+    
+    <div id="map"></div>
+    
+    <div class="legend">
+        <h4>Score Geral</h4>
+        <div class="legend-item"><div class="legend-color" style="background:#10b981"></div> 7-10 Excelente</div>
+        <div class="legend-item"><div class="legend-color" style="background:#f59e0b"></div> 5-7 Bom</div>
+        <div class="legend-item"><div class="legend-color" style="background:#ef4444"></div> 0-5 Regular</div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const bairros = [
+            {
+                nome: "Caucaia do Alto",
+                lat: -23.6650, lng: -47.0150,
+                score_geral: 5.5,
+                scores: { seguranca: 4.5, custo: 7.8, educacao: 8.2, transporte: 2.1 },
+                dados: { preco_m2: "R$ 2.500/m²", aluguel: "R$ 1.100/mês (2q)", tipo: "Casas e terrenos rurais", dist_metro: "35 km (Butantã)" },
+                raio: 3000
+            },
+            {
+                nome: "Granja Viana",
+                lat: -23.5920, lng: -46.8580,
+                score_geral: 5.4,
+                scores: { seguranca: 4.5, custo: 1.8, educacao: 8.2, transporte: 6.6 },
+                dados: { preco_m2: "R$ 6.500/m²", aluguel: "R$ 2.800/mês (2q)", tipo: "Casas em condomínio", dist_metro: "15 km (Butantã)" },
+                raio: 2500
+            },
+            {
+                nome: "Centro Cotia",
+                lat: -23.6040, lng: -46.9190,
+                score_geral: 5.8,
+                scores: { seguranca: 4.5, custo: 5.2, educacao: 8.2, transporte: 5.5 },
+                dados: { preco_m2: "R$ 4.200/m²", aluguel: "R$ 1.600/mês (2q)", tipo: "Apartamentos e casas", dist_metro: "20 km (Butantã)" },
+                raio: 2000
+            },
+            {
+                nome: "Jardim da Glória",
+                lat: -23.6200, lng: -46.9350,
+                score_geral: 6.0,
+                scores: { seguranca: 4.5, custo: 6.7, educacao: 8.2, transporte: 5.0 },
+                dados: { preco_m2: "R$ 3.200/m²", aluguel: "R$ 1.300/mês (2q)", tipo: "Casas", dist_metro: "22 km (Butantã)" },
+                raio: 1500
+            },
+            {
+                nome: "Parque São George",
+                lat: -23.6280, lng: -46.9450,
+                score_geral: 6.0,
+                scores: { seguranca: 4.5, custo: 7.0, educacao: 8.2, transporte: 4.8 },
+                dados: { preco_m2: "R$ 3.000/m²", aluguel: "R$ 1.200/mês (2q)", tipo: "Casas", dist_metro: "23 km (Butantã)" },
+                raio: 1500
+            }
+        ];
+
+        function getColor(score) {
+            if (score >= 7) return '#10b981';
+            if (score >= 5) return '#f59e0b';
+            return '#ef4444';
+        }
+
+        function getOpacity(score) {
+            return 0.2 + (score / 10) * 0.4;
+        }
+
+        // Inicializar mapa centrado em Cotia
+        const map = L.map('map', { zoomControl: true }).setView([-23.62, -46.94], 12);
+
+        // Tile layer (mapa base)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Adicionar círculos dos bairros (heatmap simplificado)
+        bairros.forEach(b => {
+            const color = getColor(b.score_geral);
+            
+            // Círculo de área
+            const circle = L.circle([b.lat, b.lng], {
+                radius: b.raio,
+                color: color,
+                fillColor: color,
+                fillOpacity: getOpacity(b.score_geral),
+                weight: 2
+            }).addTo(map);
+
+            // Popup com informações
+            const popupContent = `
+                <div class="score-popup">
+                    <h3>${b.nome}</h3>
+                    <div class="score-geral" style="background:${color}20; color:${color}">
+                        ${b.score_geral}/10
+                    </div>
+                    <div class="scores-grid">
+                        <div class="score-item">🛡️ Segurança <span>${b.scores.seguranca}</span></div>
+                        <div class="score-item">💰 Custo <span>${b.scores.custo}</span></div>
+                        <div class="score-item">📚 Educação <span>${b.scores.educacao}</span></div>
+                        <div class="score-item">🚇 Transporte <span>${b.scores.transporte}</span></div>
+                    </div>
+                    <div class="dados">
+                        <p><strong>Preço:</strong> ${b.dados.preco_m2}</p>
+                        <p><strong>Aluguel:</strong> ${b.dados.aluguel}</p>
+                        <p><strong>Tipo:</strong> ${b.dados.tipo}</p>
+                        <p><strong>Metrô:</strong> ${b.dados.dist_metro}</p>
+                    </div>
+                </div>
+            `;
+            circle.bindPopup(popupContent);
+
+            // Label com score no centro
+            const label = L.divIcon({
+                className: 'score-label',
+                html: `<div style="
+                    background:${color}; color:white; 
+                    font-weight:700; font-size:14px;
+                    padding:4px 8px; border-radius:12px;
+                    text-align:center; white-space:nowrap;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                ">${b.score_geral} · ${b.nome}</div>`,
+                iconSize: [0, 0],
+                iconAnchor: [0, 0]
+            });
+            L.marker([b.lat, b.lng], { icon: label }).addTo(map);
+        });
+    </script>
+</body>
+</html>
