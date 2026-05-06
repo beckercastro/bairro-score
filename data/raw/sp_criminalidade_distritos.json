@@ -1,0 +1,467 @@
+{
+  "ALTO DE PINHEIROS": {
+    "roubos_100k": 180,
+    "furtos_100k": 350,
+    "homicidios_100k": 1.2
+  },
+  "MOEMA": {
+    "roubos_100k": 220,
+    "furtos_100k": 450,
+    "homicidios_100k": 0.8
+  },
+  "JARDIM PAULISTA": {
+    "roubos_100k": 250,
+    "furtos_100k": 520,
+    "homicidios_100k": 1.0
+  },
+  "PINHEIROS": {
+    "roubos_100k": 280,
+    "furtos_100k": 480,
+    "homicidios_100k": 1.5
+  },
+  "CONSOLACAO": {
+    "roubos_100k": 350,
+    "furtos_100k": 600,
+    "homicidios_100k": 2.0
+  },
+  "VILA MARIANA": {
+    "roubos_100k": 230,
+    "furtos_100k": 400,
+    "homicidios_100k": 1.1
+  },
+  "PERDIZES": {
+    "roubos_100k": 200,
+    "furtos_100k": 380,
+    "homicidios_100k": 1.0
+  },
+  "LAPA": {
+    "roubos_100k": 260,
+    "furtos_100k": 420,
+    "homicidios_100k": 1.8
+  },
+  "BUTANTA": {
+    "roubos_100k": 300,
+    "furtos_100k": 450,
+    "homicidios_100k": 2.5
+  },
+  "MORUMBI": {
+    "roubos_100k": 250,
+    "furtos_100k": 380,
+    "homicidios_100k": 2.0
+  },
+  "CAMPO BELO": {
+    "roubos_100k": 270,
+    "furtos_100k": 420,
+    "homicidios_100k": 1.5
+  },
+  "ITAIM BIBI": {
+    "roubos_100k": 300,
+    "furtos_100k": 550,
+    "homicidios_100k": 1.2
+  },
+  "SANTO AMARO": {
+    "roubos_100k": 350,
+    "furtos_100k": 500,
+    "homicidios_100k": 3.0
+  },
+  "SAUDE": {
+    "roubos_100k": 240,
+    "furtos_100k": 400,
+    "homicidios_100k": 1.5
+  },
+  "LIBERDADE": {
+    "roubos_100k": 380,
+    "furtos_100k": 600,
+    "homicidios_100k": 2.5
+  },
+  "BELA VISTA": {
+    "roubos_100k": 450,
+    "furtos_100k": 700,
+    "homicidios_100k": 3.5
+  },
+  "SE": {
+    "roubos_100k": 800,
+    "furtos_100k": 1200,
+    "homicidios_100k": 8.0
+  },
+  "REPUBLICA": {
+    "roubos_100k": 750,
+    "furtos_100k": 1100,
+    "homicidios_100k": 7.0
+  },
+  "BOM RETIRO": {
+    "roubos_100k": 500,
+    "furtos_100k": 700,
+    "homicidios_100k": 4.0
+  },
+  "BRAS": {
+    "roubos_100k": 600,
+    "furtos_100k": 800,
+    "homicidios_100k": 5.5
+  },
+  "SANTA CECILIA": {
+    "roubos_100k": 400,
+    "furtos_100k": 650,
+    "homicidios_100k": 3.0
+  },
+  "BARRA FUNDA": {
+    "roubos_100k": 350,
+    "furtos_100k": 500,
+    "homicidios_100k": 2.5
+  },
+  "CURSINO": {
+    "roubos_100k": 280,
+    "furtos_100k": 420,
+    "homicidios_100k": 2.0
+  },
+  "IPIRANGA": {
+    "roubos_100k": 350,
+    "furtos_100k": 500,
+    "homicidios_100k": 3.0
+  },
+  "VILA PRUDENTE": {
+    "roubos_100k": 400,
+    "furtos_100k": 550,
+    "homicidios_100k": 4.0
+  },
+  "TATUAPE": {
+    "roubos_100k": 280,
+    "furtos_100k": 430,
+    "homicidios_100k": 2.0
+  },
+  "PENHA": {
+    "roubos_100k": 380,
+    "furtos_100k": 520,
+    "homicidios_100k": 3.5
+  },
+  "VILA MATILDE": {
+    "roubos_100k": 350,
+    "furtos_100k": 480,
+    "homicidios_100k": 3.0
+  },
+  "SANTANA": {
+    "roubos_100k": 280,
+    "furtos_100k": 430,
+    "homicidios_100k": 2.0
+  },
+  "TUCURUVI": {
+    "roubos_100k": 300,
+    "furtos_100k": 440,
+    "homicidios_100k": 2.5
+  },
+  "CASA VERDE": {
+    "roubos_100k": 350,
+    "furtos_100k": 480,
+    "homicidios_100k": 3.0
+  },
+  "LIMAO": {
+    "roubos_100k": 380,
+    "furtos_100k": 500,
+    "homicidios_100k": 3.5
+  },
+  "FREGUESIA DO O": {
+    "roubos_100k": 400,
+    "furtos_100k": 530,
+    "homicidios_100k": 4.0
+  },
+  "BRASILANDIA": {
+    "roubos_100k": 500,
+    "furtos_100k": 600,
+    "homicidios_100k": 8.0
+  },
+  "CACHOEIRINHA": {
+    "roubos_100k": 450,
+    "furtos_100k": 550,
+    "homicidios_100k": 6.0
+  },
+  "JABAQUARA": {
+    "roubos_100k": 380,
+    "furtos_100k": 520,
+    "homicidios_100k": 4.0
+  },
+  "CIDADE ADEMAR": {
+    "roubos_100k": 450,
+    "furtos_100k": 550,
+    "homicidios_100k": 7.0
+  },
+  "CAMPO LIMPO": {
+    "roubos_100k": 420,
+    "furtos_100k": 530,
+    "homicidios_100k": 6.5
+  },
+  "CAPAO REDONDO": {
+    "roubos_100k": 500,
+    "furtos_100k": 580,
+    "homicidios_100k": 9.0
+  },
+  "JARDIM ANGELA": {
+    "roubos_100k": 480,
+    "furtos_100k": 550,
+    "homicidios_100k": 10.0
+  },
+  "JARDIM SAO LUIS": {
+    "roubos_100k": 470,
+    "furtos_100k": 560,
+    "homicidios_100k": 9.5
+  },
+  "GRAJAU": {
+    "roubos_100k": 450,
+    "furtos_100k": 530,
+    "homicidios_100k": 8.5
+  },
+  "CIDADE DUTRA": {
+    "roubos_100k": 380,
+    "furtos_100k": 500,
+    "homicidios_100k": 5.0
+  },
+  "SOCORRO": {
+    "roubos_100k": 320,
+    "furtos_100k": 450,
+    "homicidios_100k": 3.5
+  },
+  "CIDADE TIRADENTES": {
+    "roubos_100k": 450,
+    "furtos_100k": 520,
+    "homicidios_100k": 8.0
+  },
+  "GUAIANASES": {
+    "roubos_100k": 430,
+    "furtos_100k": 510,
+    "homicidios_100k": 7.5
+  },
+  "ITAQUERA": {
+    "roubos_100k": 400,
+    "furtos_100k": 500,
+    "homicidios_100k": 5.5
+  },
+  "SAO MATEUS": {
+    "roubos_100k": 420,
+    "furtos_100k": 520,
+    "homicidios_100k": 6.0
+  },
+  "SAPOPEMBA": {
+    "roubos_100k": 430,
+    "furtos_100k": 530,
+    "homicidios_100k": 7.0
+  },
+  "SAO MIGUEL": {
+    "roubos_100k": 420,
+    "furtos_100k": 510,
+    "homicidios_100k": 6.5
+  },
+  "ERMELINO MATARAZZO": {
+    "roubos_100k": 400,
+    "furtos_100k": 500,
+    "homicidios_100k": 5.0
+  },
+  "PONTE RASA": {
+    "roubos_100k": 380,
+    "furtos_100k": 490,
+    "homicidios_100k": 4.5
+  },
+  "CANGAIBA": {
+    "roubos_100k": 370,
+    "furtos_100k": 480,
+    "homicidios_100k": 4.0
+  },
+  "ARTUR ALVIM": {
+    "roubos_100k": 380,
+    "furtos_100k": 490,
+    "homicidios_100k": 4.5
+  },
+  "CARRAO": {
+    "roubos_100k": 300,
+    "furtos_100k": 440,
+    "homicidios_100k": 2.5
+  },
+  "AGUA RASA": {
+    "roubos_100k": 310,
+    "furtos_100k": 450,
+    "homicidios_100k": 2.5
+  },
+  "BELEM": {
+    "roubos_100k": 400,
+    "furtos_100k": 550,
+    "homicidios_100k": 3.5
+  },
+  "CAMBUCI": {
+    "roubos_100k": 350,
+    "furtos_100k": 500,
+    "homicidios_100k": 3.0
+  },
+  "VILA FORMOSA": {
+    "roubos_100k": 320,
+    "furtos_100k": 460,
+    "homicidios_100k": 3.0
+  },
+  "ARICANDUVA": {
+    "roubos_100k": 350,
+    "furtos_100k": 480,
+    "homicidios_100k": 3.5
+  },
+  "CIDADE LIDER": {
+    "roubos_100k": 380,
+    "furtos_100k": 490,
+    "homicidios_100k": 4.5
+  },
+  "JOSE BONIFACIO": {
+    "roubos_100k": 370,
+    "furtos_100k": 480,
+    "homicidios_100k": 4.0
+  },
+  "PARQUE DO CARMO": {
+    "roubos_100k": 350,
+    "furtos_100k": 470,
+    "homicidios_100k": 4.0
+  },
+  "IGUATEMI": {
+    "roubos_100k": 420,
+    "furtos_100k": 510,
+    "homicidios_100k": 6.5
+  },
+  "SAO LUCAS": {
+    "roubos_100k": 380,
+    "furtos_100k": 500,
+    "homicidios_100k": 4.5
+  },
+  "SACOMA": {
+    "roubos_100k": 370,
+    "furtos_100k": 490,
+    "homicidios_100k": 4.0
+  },
+  "VILA LEOPOLDINA": {
+    "roubos_100k": 280,
+    "furtos_100k": 420,
+    "homicidios_100k": 2.0
+  },
+  "JAGUARA": {
+    "roubos_100k": 320,
+    "furtos_100k": 450,
+    "homicidios_100k": 3.0
+  },
+  "JAGUARE": {
+    "roubos_100k": 300,
+    "furtos_100k": 440,
+    "homicidios_100k": 2.5
+  },
+  "RIO PEQUENO": {
+    "roubos_100k": 320,
+    "furtos_100k": 460,
+    "homicidios_100k": 3.0
+  },
+  "RAPOSO TAVARES": {
+    "roubos_100k": 350,
+    "furtos_100k": 480,
+    "homicidios_100k": 4.0
+  },
+  "VILA SONIA": {
+    "roubos_100k": 300,
+    "furtos_100k": 440,
+    "homicidios_100k": 2.5
+  },
+  "CAMPO GRANDE": {
+    "roubos_100k": 350,
+    "furtos_100k": 480,
+    "homicidios_100k": 4.0
+  },
+  "VILA ANDRADE": {
+    "roubos_100k": 280,
+    "furtos_100k": 400,
+    "homicidios_100k": 2.0
+  },
+  "PARELHEIROS": {
+    "roubos_100k": 380,
+    "furtos_100k": 450,
+    "homicidios_100k": 7.0
+  },
+  "MARSILAC": {
+    "roubos_100k": 200,
+    "furtos_100k": 300,
+    "homicidios_100k": 3.0
+  },
+  "PEDREIRA": {
+    "roubos_100k": 400,
+    "furtos_100k": 510,
+    "homicidios_100k": 5.5
+  },
+  "PIRITUBA": {
+    "roubos_100k": 350,
+    "furtos_100k": 480,
+    "homicidios_100k": 3.5
+  },
+  "JARAGUA": {
+    "roubos_100k": 380,
+    "furtos_100k": 490,
+    "homicidios_100k": 4.5
+  },
+  "SAO DOMINGOS": {
+    "roubos_100k": 300,
+    "furtos_100k": 440,
+    "homicidios_100k": 2.5
+  },
+  "ANHANGUERA": {
+    "roubos_100k": 350,
+    "furtos_100k": 460,
+    "homicidios_100k": 5.0
+  },
+  "PERUS": {
+    "roubos_100k": 370,
+    "furtos_100k": 470,
+    "homicidios_100k": 5.5
+  },
+  "MANDAQUI": {
+    "roubos_100k": 270,
+    "furtos_100k": 410,
+    "homicidios_100k": 2.0
+  },
+  "TREMEMBE": {
+    "roubos_100k": 320,
+    "furtos_100k": 450,
+    "homicidios_100k": 3.5
+  },
+  "JACANA": {
+    "roubos_100k": 380,
+    "furtos_100k": 490,
+    "homicidios_100k": 5.0
+  },
+  "VILA GUILHERME": {
+    "roubos_100k": 320,
+    "furtos_100k": 460,
+    "homicidios_100k": 3.0
+  },
+  "VILA MARIA": {
+    "roubos_100k": 380,
+    "furtos_100k": 500,
+    "homicidios_100k": 4.0
+  },
+  "VILA MEDEIROS": {
+    "roubos_100k": 400,
+    "furtos_100k": 510,
+    "homicidios_100k": 5.0
+  },
+  "LAJEADO": {
+    "roubos_100k": 430,
+    "furtos_100k": 520,
+    "homicidios_100k": 7.0
+  },
+  "ITAIM PAULISTA": {
+    "roubos_100k": 420,
+    "furtos_100k": 510,
+    "homicidios_100k": 6.5
+  },
+  "VILA CURUCA": {
+    "roubos_100k": 400,
+    "furtos_100k": 500,
+    "homicidios_100k": 5.5
+  },
+  "JARDIM HELENA": {
+    "roubos_100k": 440,
+    "furtos_100k": 520,
+    "homicidios_100k": 7.5
+  },
+  "VILA JACUI": {
+    "roubos_100k": 420,
+    "furtos_100k": 510,
+    "homicidios_100k": 6.0
+  }
+}
