@@ -35,10 +35,12 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 <div id="map"></div>
 <div class="info" id="info"><h3>BairroScore</h3><p>Passe o mouse num distrito</p></div>
 <div class="legend"><h4>Score Geral</h4>
-<div class="item"><i style="background:#10b981"></i>9+ Excelente</div>
-<div class="item"><i style="background:#84cc16"></i>8-9 Bom</div>
-<div class="item"><i style="background:#f59e0b"></i>7-8 Regular</div>
-<div class="item"><i style="background:#ef4444"></i>&lt;7 Ruim</div>
+<div class="item"><i style="background:#10b981"></i>8+ Excelente</div>
+<div class="item"><i style="background:#34d399"></i>7-8 Muito bom</div>
+<div class="item"><i style="background:#84cc16"></i>6-7 Bom</div>
+<div class="item"><i style="background:#eab308"></i>5-6 Regular</div>
+<div class="item"><i style="background:#f97316"></i>4-5 Ruim</div>
+<div class="item"><i style="background:#ef4444"></i>&lt;4 Péssimo</div>
 <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
 <h4>Scores individuais</h4>
 <div class="item">🛡️ Segurança — roubos e homicídios</div>
@@ -52,7 +54,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 var map = L.map('map').setView([-23.6, -46.75], 10);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'OSM'}).addTo(map);
 
-function gc(s) { return s>=9?'#10b981':s>=8?'#84cc16':s>=7?'#f59e0b':'#ef4444'; }
+function gc(s) { return s>=8?'#10b981':s>=7?'#34d399':s>=6?'#84cc16':s>=5?'#eab308':s>=4?'#f97316':'#ef4444'; }
 
 var info = document.getElementById('info');
 var stats = document.getElementById('stats');
