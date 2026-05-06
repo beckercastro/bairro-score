@@ -80,9 +80,20 @@ Você recebe os scores processados e gera páginas HTML estáticas otimizadas pa
 ## Stack
 - Astro (SSG) — gera HTML estático, zero JS desnecessário
 - Tailwind CSS — estilo rápido e responsivo
+- Leaflet.js — mapa interativo com polígonos dos bairros
 - Chart.js — gráficos leves
 - Sharp — geração de OG images
 - @astrojs/sitemap — sitemap automático
+
+## Mapa Interativo (decisões tomadas)
+- Biblioteca: Leaflet (open source, grátis, leve)
+- Visualização: polígonos com bordas reais dos bairros (GeoJSON)
+- Cores: verde (7-10), verde-limão (6-7), amarelo (5-6), vermelho (<5)
+- Interação: hover destaca (opacity + border), click abre popup
+- Popup: score geral + 4 dimensões + dados (preço, aluguel, transporte)
+- Labels: permanentes com score + nome do bairro
+- Fonte de limites: IBGE setores censitários / GeoSampa (pra SP capital)
+- Mobile: touch-friendly, popup responsivo
 
 ## Regras
 - Cada página DEVE ter conteúdo único (não só template swap)

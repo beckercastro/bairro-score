@@ -41,6 +41,24 @@ Você está coletando dados públicos de fontes governamentais e de mercado para
 - Dados: limites de distritos, áreas verdes, equipamentos públicos
 - Formato: Shapefile/GeoJSON
 
+## Status das Fontes
+
+| Fonte | Status | Notas |
+|-------|--------|-------|
+| SSP-SP | ⚠️ Scraper pronto, bloqueado por Netskope | Precisa rodar em rede sem proxy ou usar Selenium |
+| FipeZap | ⬜ Pendente | Scraper a criar |
+| INEP/MEC | ⬜ Pendente | Download direto de microdados |
+| IBGE | ✅ Dados demográficos coletados manualmente | Automatizar |
+| GeoJSON limites | ⬜ Pendente | github.com/tbrugz/geodata-br (municípios) + IBGE setores censitários |
+| Transporte | ✅ Dados básicos coletados | Metrô/CPTM coords + distâncias |
+
+## Aprendizados
+- Portal SSP-SP usa ASP.NET com ViewState/postback — precisa simular sessão completa
+- Netskope (SWG corporativo) intercepta HTTP e pode bloquear scrapers
+- Alternativa SSP-SP: dados consolidados do SEADE (repositorio.seade.gov.br)
+- GeoJSON de municípios BR: github.com/tbrugz/geodata-br
+- Pra bairros dentro de município: usar setores censitários IBGE agrupados
+
 ## Regras
 - Sempre respeitar robots.txt e rate limiting
 - Preferir APIs e downloads diretos sobre scraping quando disponível

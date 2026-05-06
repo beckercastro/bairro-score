@@ -84,20 +84,32 @@ BairroScore é uma plataforma de ranking e comparação de bairros no Brasil. Mo
 
 ## Estado Atual do Projeto
 
-### Fase: PRÉ-LANÇAMENTO
-### Status: Planejamento concluído, pronto pra iniciar coleta de dados
+### Fase: PROTÓTIPO (Cotia/Caucaia do Alto)
+### Status: MVP visual funcionando com mapa interativo
+
+### Concluído:
+1. ✅ Data Collector: dados consolidados de Cotia (segurança, preços, educação, transporte)
+2. ✅ Scoring Engine: algoritmo rodando, scores calculados pra 5 bairros
+3. ✅ Page Generator: mapa interativo com Leaflet + polígonos + popups
+4. ✅ Scraper SSP-SP: código pronto (bloqueado por Netskope, funciona em outra rede)
 
 ### Próximas ações (em ordem):
-1. ⬜ Data Collector: scraper SSP-SP (criminalidade)
-2. ⬜ Data Collector: scraper FipeZap (preços)
-3. ⬜ Data Collector: download INEP (escolas)
-4. ⬜ Data Collector: dados transporte (metrô/CPTM)
-5. ⬜ Scoring Engine: processar dados e gerar scores
-6. ⬜ Page Generator: setup Astro + template base
-7. ⬜ Page Generator: gerar 96 páginas de distritos
-8. ⬜ Content Writer: conteúdo editorial top 20 bairros
-9. ⬜ Page Generator: deploy + sitemap
-10. ⬜ Growth: submeter ao Google Search Console
+1. ⬜ Data Collector: obter GeoJSON real dos limites de bairros (IBGE setores censitários)
+2. ⬜ Data Collector: expandir dados pra todos os bairros de Cotia
+3. ⬜ Data Collector: scraper FipeZap/ZapImóveis (preços reais atualizados)
+4. ⬜ Page Generator: criar páginas individuais por bairro (SEO)
+5. ⬜ Content Writer: conteúdo editorial pra cada bairro de Cotia
+6. ⬜ Page Generator: deploy no Vercel + domínio
+7. ⬜ Data Collector: expandir pra São Paulo capital (96 distritos)
+8. ⬜ Growth: submeter ao Google Search Console
+9. ⬜ Growth: aplicar Google AdSense
+
+### Decisões técnicas tomadas:
+- Mapa: Leaflet (open source, grátis)
+- Visualização: polígonos com bordas reais dos bairros (não círculos)
+- Interação: hover destaca região, click abre popup com scores + dados
+- Dados: JSON estático gerado pelo scoring engine
+- Protótipo inicial: Cotia (onde Becker mora) pra validar conceito
 
 ## Regras de Operação
 
