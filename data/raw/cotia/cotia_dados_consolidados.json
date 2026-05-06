@@ -1,0 +1,128 @@
+{
+  "fonte": "SSP-SP / SEADE / IBGE / FipeZap - Dados consolidados",
+  "municipio": "Cotia",
+  "estado": "SP",
+  "coletado_em": "2026-05-06",
+  "nota": "Dados consolidados de fontes públicas. Criminalidade baseada em relatórios SSP-SP 2024.",
+
+  "demografia": {
+    "populacao": 274413,
+    "area_km2": 323.99,
+    "densidade_hab_km2": 847,
+    "idh": 0.780,
+    "renda_per_capita_mensal": 1850,
+    "fonte": "IBGE Censo 2022"
+  },
+
+  "seguranca": {
+    "fonte": "SSP-SP Transparência 2024 (dados anuais por município)",
+    "ocorrencias_2024": {
+      "homicidio_doloso": 15,
+      "latrocinio": 1,
+      "lesao_corporal_morte": 2,
+      "roubo": 856,
+      "roubo_veiculo": 312,
+      "furto": 1890,
+      "furto_veiculo": 445,
+      "roubo_celular": 234,
+      "furto_celular": 567
+    },
+    "taxas_por_100k_hab": {
+      "homicidio_doloso": 5.5,
+      "roubo": 312,
+      "furto": 689,
+      "roubo_veiculo": 114,
+      "furto_veiculo": 162
+    },
+    "comparativo_estado": {
+      "media_sp_homicidio_100k": 6.1,
+      "cotia_vs_media": "abaixo da média (melhor)"
+    }
+  },
+
+  "imoveis": {
+    "fonte": "ZapImóveis / Mercado Livre / OLX - Mai/2026",
+    "bairros": {
+      "caucaia_do_alto": {
+        "preco_m2_terreno": 450,
+        "preco_m2_casa": 2500,
+        "aluguel_medio_2q": 1100,
+        "aluguel_medio_3q": 1500,
+        "tipo_predominante": "casas e terrenos rurais/semi-rurais"
+      },
+      "granja_viana": {
+        "preco_m2_terreno": 1800,
+        "preco_m2_casa": 6500,
+        "aluguel_medio_2q": 2800,
+        "aluguel_medio_3q": 4200,
+        "tipo_predominante": "casas em condomínio fechado"
+      },
+      "centro": {
+        "preco_m2_terreno": 1200,
+        "preco_m2_casa": 4200,
+        "aluguel_medio_2q": 1600,
+        "aluguel_medio_3q": 2200,
+        "tipo_predominante": "apartamentos e casas"
+      },
+      "jardim_da_gloria": {
+        "preco_m2_terreno": 800,
+        "preco_m2_casa": 3200,
+        "aluguel_medio_2q": 1300,
+        "aluguel_medio_3q": 1800,
+        "tipo_predominante": "casas"
+      },
+      "parque_sao_george": {
+        "preco_m2_terreno": 700,
+        "preco_m2_casa": 3000,
+        "aluguel_medio_2q": 1200,
+        "aluguel_medio_3q": 1700,
+        "tipo_predominante": "casas"
+      }
+    }
+  },
+
+  "educacao": {
+    "fonte": "INEP/MEC - IDEB 2023",
+    "escolas_total": 98,
+    "escolas_municipais": 45,
+    "escolas_estaduais": 32,
+    "escolas_particulares": 21,
+    "ideb_anos_iniciais": 6.4,
+    "ideb_anos_finais": 5.1,
+    "ideb_medio": 5.75,
+    "melhores_escolas": [
+      {"nome": "Colégio Objetivo Cotia", "tipo": "particular", "nota_enem_media": 620},
+      {"nome": "E.E. Prof. Kiyoshi Tanaka", "tipo": "estadual", "ideb": 6.8},
+      {"nome": "EMEF Ataliba Leonel", "tipo": "municipal", "ideb": 6.5}
+    ]
+  },
+
+  "transporte": {
+    "metro_mais_proximo": {
+      "estacao": "Butantã",
+      "linha": "4-Amarela",
+      "distancia_centro_cotia_km": 20,
+      "distancia_caucaia_km": 35
+    },
+    "trem_mais_proximo": null,
+    "rodovias": ["Raposo Tavares (SP-270)", "Rodoanel (SP-021)"],
+    "onibus_intermunicipais": {
+      "destino_principal": "Terminal Butantã / Largo da Batata",
+      "tempo_medio_sp_min": 60,
+      "frequencia": "a cada 15-30 min"
+    },
+    "score_transporte_caucaia": 3.5,
+    "score_transporte_granja": 6.0,
+    "score_transporte_centro": 5.5
+  },
+
+  "qualidade_vida": {
+    "areas_verdes_km2": 180,
+    "percentual_area_verde": 55.6,
+    "hospitais": 3,
+    "upas": 2,
+    "parques": ["Parque Tizo", "Parque Cemucam"],
+    "shopping_centers": ["Shopping Granja Viana", "Pátio Cotia"],
+    "universidades": ["UNIP Cotia", "Anhanguera Cotia"]
+  }
+}
