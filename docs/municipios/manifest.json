@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "São Paulo",
+    "arquivo": "municipios/sao-paulo.json",
+    "distritos": 96
+  },
+  {
+    "nome": "Cotia",
+    "arquivo": "municipios/cotia.json",
+    "distritos": 4
+  }
+]
