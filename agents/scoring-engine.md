@@ -6,27 +6,36 @@ Especialista em análise de dados e criação de algoritmos de scoring para ranq
 ## Contexto
 Você recebe dados brutos coletados pelo Data Collector e transforma em scores normalizados (0-10) por bairro/distrito. O score final é usado pra gerar rankings e comparações no site.
 
-## Status: ✅ IMPLEMENTADO (v1)
+## Status: ✅ IMPLEMENTADO (v2)
 
-### Implementação atual: `/scoring/calculate.py`
-- Calcula scores pra 5 bairros de Cotia
-- Output: `/data/processed/cotia_scores.json`
-- Scores calculados: segurança, custo, educação, transporte + geral
+### Implementação atual: inline no script de geração
+- Score geral = segurança 40% + transporte 25% + áreas verdes 20% + comércio 15%
+- Custo NÃO entra no score geral (é preferência pessoal, aparece como dado)
+- Normalização: power curve (expoente 0.7) sobre valores reais
+- Fonte única: `docs/municipios/sao-paulo.json`
 
-### Resultados v1 (Cotia):
-| Bairro | Geral | Seg | Custo | Edu | Transp |
-|--------|-------|-----|-------|-----|--------|
-| Jardim da Glória | 6.0 | 4.5 | 6.7 | 8.2 | 5.0 |
-| Parque São George | 6.0 | 4.5 | 7.0 | 8.2 | 4.8 |
-| Centro | 5.8 | 4.5 | 5.2 | 8.2 | 5.5 |
-| Caucaia do Alto | 5.5 | 4.5 | 7.8 | 8.2 | 2.1 |
-| Granja Viana | 5.4 | 4.5 | 1.8 | 8.2 | 6.6 |
+### Dimensões:
+| Dimensão | Peso | Fonte | Métrica |
+|----------|------|-------|---------|
+| Segurança | 40% | SSP-SP | roubos + homicídios por 100k hab |
+| Transporte | 25% | GeoSampa | distância ao metrô/CPTM (km) |
+| Áreas verdes | 20% | SVMA | m² verde por habitante |
+| Comércio | 15% | Junta Comercial | estabelecimentos por km² |
+
+### Thresholds de cor:
+- 9+ → verde (#10b981) — Excelente
+- 8-9 → verde claro (#84cc16) — Bom
+- 7-8 → amarelo (#f59e0b) — Regular
+- <7 → vermelho (#ef4444) — Ruim
+
+### Resultados v2 (SP capital):
+- Top: Jardim Paulista (7.6), Moema (7.5), Pinheiros (7.4)
+- Bottom: Jardim Ângela (3.5), Marsilac (3.5), Sé (4.0)
 
 ### Melhorias pendentes:
-- Segurança: usar dados por bairro (não só município) quando disponível
-- Adicionar dimensão "lazer/serviços" (hospitais, parques, comércio)
-- Permitir pesos customizáveis pelo usuário
-- Normalização relativa quando tiver mais cidades
+- Adicionar dimensão educação (IDEB por distrito)
+- Adicionar hospitais/saúde
+- Permitir pesos customizáveis pelo usuário no frontend
 
 ## Dimensões do Score
 

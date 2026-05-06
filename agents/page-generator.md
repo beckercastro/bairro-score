@@ -78,22 +78,30 @@ Você recebe os scores processados e gera páginas HTML estáticas otimizadas pa
 ```
 
 ## Stack
-- Astro (SSG) — gera HTML estático, zero JS desnecessário
-- Tailwind CSS — estilo rápido e responsivo
-- Leaflet.js — mapa interativo com polígonos dos bairros
-- Chart.js — gráficos leves
-- Sharp — geração de OG images
-- @astrojs/sitemap — sitemap automático
+- HTML/CSS/JS puro (sem framework — GitHub Pages serve estático)
+- Leaflet.js — mapa interativo com polígonos GeoJSON
+- Dados: JSON carregado via fetch (fonte única)
+- Hosting: GitHub Pages (grátis, deploy automático)
 
-## Mapa Interativo (decisões tomadas)
+## Arquitetura (decisão final)
+- **Fonte única de dados**: `docs/municipios/*.json`
+- **Mapa** (`index.html`): carrega manifest → fetch cada município → renderiza polígonos
+- **Página de distrito** (`distrito.html?d=slug`): fetch do mesmo JSON → renderiza dados
+- **Sem duplicação**: mudar o JSON atualiza mapa E páginas automaticamente
+- **Adicionar município**: criar JSON + adicionar no manifest.json
+
+## Mapa Interativo
 - Biblioteca: Leaflet (open source, grátis, leve)
-- Visualização: polígonos com bordas reais dos bairros (GeoJSON)
-- Cores: verde (7-10), verde-limão (6-7), amarelo (5-6), vermelho (<5)
-- Interação: hover destaca (opacity + border), click abre popup
-- Popup: score geral + 4 dimensões + dados (preço, aluguel, transporte)
-- Labels: permanentes com score + nome do bairro
-- Fonte de limites: IBGE setores censitários / GeoSampa (pra SP capital)
-- Mobile: touch-friendly, popup responsivo
+- Polígonos: GeoJSON oficial do GeoSampa (EPSG:31983 convertido pra WGS84)
+- Cores: baseadas no score_geral com thresholds 9/8/7
+- Hover: destaca + mostra painel lateral com todos os scores e dados
+- Click: navega pra distrito.html?d={slug}
+- Labels: score + nome permanente (futuro)
+
+## SEO (pendente)
+- Problema: `distrito.html?d=slug` não indexa bem no Google (conteúdo dinâmico via JS)
+- Solução futura: gerar HTML estático por distrito MAS lendo dados do JSON no build time
+- Ou: usar SSR (Next.js/Astro) quando migrar pra domínio próprio
 
 ## Regras
 - Cada página DEVE ter conteúdo único (não só template swap)

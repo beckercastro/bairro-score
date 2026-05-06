@@ -84,32 +84,50 @@ BairroScore é uma plataforma de ranking e comparação de bairros no Brasil. Mo
 
 ## Estado Atual do Projeto
 
-### Fase: PROTÓTIPO (Cotia/Caucaia do Alto)
-### Status: MVP visual funcionando com mapa interativo
+### Fase: MVP ONLINE
+### URL: https://beckercastro.github.io/bairro-score/
+### Repo: https://github.com/beckercastro/bairro-score
 
 ### Concluído:
-1. ✅ Data Collector: dados consolidados de Cotia (segurança, preços, educação, transporte)
-2. ✅ Scoring Engine: algoritmo rodando, scores calculados pra 5 bairros
-3. ✅ Page Generator: mapa interativo com Leaflet + polígonos + popups
-4. ✅ Scraper SSP-SP: código pronto (bloqueado por Netskope, funciona em outra rede)
+1. ✅ Mapa interativo com 100 distritos (96 SP + 4 Cotia)
+2. ✅ Dados reais: segurança (SSP-SP), preço m², transporte, áreas verdes, comércio
+3. ✅ Score geral = segurança 40% + transporte 25% + verde 20% + comércio 15%
+4. ✅ Hover mostra 5 scores + dados brutos
+5. ✅ Click no distrito → página individual com detalhes
+6. ✅ Fonte única de dados (municipios/*.json) — mapa e páginas leem do mesmo lugar
+7. ✅ GitHub Pages funcionando (deploy automático a cada push)
+8. ✅ Sitemap.xml gerado
+9. ✅ Arquitetura por município (fácil adicionar novas cidades)
+
+### Arquitetura:
+```
+docs/
+├── index.html              ← mapa (carrega municipios via manifest)
+├── distrito.html           ← página de distrito (lê do mesmo JSON)
+├── municipios/
+│   ├── manifest.json       ← lista de municípios disponíveis
+│   ├── sao-paulo.json      ← 96 distritos com polígonos + dados
+│   └── cotia.json          ← 4 distritos
+└── sitemap.xml
+```
 
 ### Próximas ações (em ordem):
-1. ⬜ Data Collector: obter GeoJSON real dos limites de bairros (IBGE setores censitários)
-2. ⬜ Data Collector: expandir dados pra todos os bairros de Cotia
-3. ⬜ Data Collector: scraper FipeZap/ZapImóveis (preços reais atualizados)
-4. ⬜ Page Generator: criar páginas individuais por bairro (SEO)
-5. ⬜ Content Writer: conteúdo editorial pra cada bairro de Cotia
-6. ⬜ Page Generator: deploy no Vercel + domínio
-7. ⬜ Data Collector: expandir pra São Paulo capital (96 distritos)
-8. ⬜ Growth: submeter ao Google Search Console
-9. ⬜ Growth: aplicar Google AdSense
+1. ⬜ SEO: páginas individuais precisam de URLs próprias (distrito.html?d=x não indexa bem)
+2. ⬜ Content Writer: texto editorial por distrito (Google penaliza páginas só com dados)
+3. ⬜ Data Collector: dados reais de escolas (IDEB por distrito)
+4. ⬜ Data Collector: expandir pra mais municípios da Grande SP
+5. ⬜ Growth: submeter sitemap ao Google Search Console
+6. ⬜ Growth: registrar domínio próprio (bairroscore.com.br)
+7. ⬜ Growth: aplicar Google AdSense quando tiver conteúdo suficiente
 
-### Decisões técnicas tomadas:
-- Mapa: Leaflet (open source, grátis)
-- Visualização: polígonos com bordas reais dos bairros (não círculos)
-- Interação: hover destaca região, click abre popup com scores + dados
-- Dados: JSON estático gerado pelo scoring engine
-- Protótipo inicial: Cotia (onde Becker mora) pra validar conceito
+### Decisões técnicas:
+- Fonte única de dados: municipios/*.json (mapa + páginas leem do mesmo arquivo)
+- Score geral: segurança 40% + transporte 25% + áreas verdes 20% + comércio 15%
+- Custo (preço m²) aparece como dado mas NÃO entra no score geral (é preferência pessoal)
+- Thresholds de cor: 9+ verde, 8-9 verde claro, 7-8 amarelo, <7 vermelho
+- Hosting: GitHub Pages (grátis)
+- Mapa: Leaflet + GeoJSON oficial do GeoSampa (polígonos reais)
+- Coordenadas: convertidas de EPSG:31983 → WGS84 via pyproj
 
 ## Regras de Operação
 
