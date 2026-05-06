@@ -1,87 +1,73 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BairroScore - São Paulo</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-        #map { width: 100%; height: 100vh; }
-        .info { position: fixed; top: 60px; right: 10px; background: white; padding: 14px 18px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 1000; min-width: 220px; font-size: 13px; }
-        .info h4 { margin-bottom: 8px; font-size: 15px; }
-        .info .score { font-size: 28px; font-weight: 700; }
-        .info .detail { margin: 4px 0; color: #555; }
-        .legend { position: fixed; bottom: 20px; left: 20px; background: white; padding: 14px 18px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 1000; font-size: 12px; }
-        .legend h4 { margin-bottom: 8px; font-size: 13px; }
-        .legend i { width: 18px; height: 12px; display: inline-block; margin-right: 6px; border-radius: 2px; }
-        .legend .item { margin: 4px 0; }
-        .header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: white; padding: 10px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between; }
-        .header h1 { font-size: 20px; font-weight: 700; }
-        .header h1 span { color: #10b981; }
-        .header p { font-size: 12px; color: #666; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BairroScore - São Paulo</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+#map{width:100%;height:100vh}
+.info{position:fixed;top:55px;right:10px;background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.18);z-index:1000;min-width:250px;font-size:13px;max-width:280px}
+.info h3{margin:0 0 4px;font-size:16px}
+.info .region{font-size:11px;color:#888;margin-bottom:10px}
+.info .score-big{font-size:32px;font-weight:700;margin:4px 0}
+.info .scores{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:10px 0}
+.info .sc{background:#f5f5f5;padding:6px 8px;border-radius:6px;font-size:12px}
+.info .sc span{font-weight:700;float:right}
+.info .dados{border-top:1px solid #eee;padding-top:8px;margin-top:8px;font-size:12px;color:#555}
+.info .dados p{margin:3px 0}
+.legend{position:fixed;bottom:20px;left:20px;background:#fff;padding:14px 18px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,.15);z-index:1000;font-size:12px}
+.legend h4{margin-bottom:8px}
+.legend i{width:18px;height:12px;display:inline-block;margin-right:6px;border-radius:2px}
+.legend .item{margin:4px 0}
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff;padding:10px 20px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:20px;font-weight:700}
+.header h1 span{color:#10b981}
+.header p{font-size:12px;color:#666}
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>Bairro<span>Score</span></h1>
-        <p>📍 São Paulo — 96 distritos · Dados SSP-SP 2024</p>
-    </div>
-    <div id="map"></div>
-    <div class="info" id="info">
-        <h4>Passe o mouse num distrito</h4>
-        <p class="detail">Clique pra mais detalhes</p>
-    </div>
-    <div class="legend">
-        <h4>🛡️ Score Segurança</h4>
-        <div class="item"><i style="background:#10b981"></i> 7-10 Muito seguro</div>
-        <div class="item"><i style="background:#84cc16"></i> 5-7 Seguro</div>
-        <div class="item"><i style="background:#f59e0b"></i> 3-5 Médio</div>
-        <div class="item"><i style="background:#ef4444"></i> 0-3 Perigoso</div>
-    </div>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('map').setView([-23.55, -46.63], 11);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
-
-        function getColor(score) {
-            return score >= 7 ? '#10b981' : score >= 5 ? '#84cc16' : score >= 3 ? '#f59e0b' : '#ef4444';
-        }
-
-        function style(feature) {
-            const score = feature.properties.score_seguranca || 5;
-            return { fillColor: getColor(score), weight: 1.5, color: '#fff', fillOpacity: 0.6 };
-        }
-
-        const info = document.getElementById('info');
-
-        function highlightFeature(e) {
-            const layer = e.target;
-            layer.setStyle({ weight: 3, fillOpacity: 0.8 });
-            const p = layer.feature.properties;
-            const score = p.score_seguranca || 5;
-            const color = getColor(score);
-            info.innerHTML = '<h4>' + p.nm_distrito_municipal + '</h4>' +
-                '<div class="score" style="color:' + color + '">' + score.toFixed(1) + '/10</div>' +
-                '<p class="detail">🔫 Roubos: ' + (p.roubos_100k || '?') + '/100k hab</p>' +
-                '<p class="detail">💀 Homicídios: ' + (p.homicidios_100k || '?') + '/100k hab</p>' +
-                '<p class="detail">📍 Região: ' + (p.nm_regiao_05 || '') + '</p>';
-        }
-
-        function resetHighlight(e) {
-            geojsonLayer.resetStyle(e.target);
-        }
-
-        function onEachFeature(feature, layer) {
-            layer.on({ mouseover: highlightFeature, mouseout: resetHighlight });
-        }
-
-        fetch('sp_distritos_scores.json')
-            .then(r => r.json())
-            .then(data => {
-                window.geojsonLayer = L.geoJSON(data, { style: style, onEachFeature: onEachFeature }).addTo(map);
-            });
-    </script>
+<div class="header"><h1>Bairro<span>Score</span></h1><p>São Paulo — 96 distritos · Dados reais 2024</p></div>
+<div id="map"></div>
+<div class="info" id="info"><h3>BairroScore SP</h3><p>Passe o mouse num distrito</p></div>
+<div class="legend"><h4>Score Geral</h4>
+<div class="item"><i style="background:#10b981"></i>7+ Excelente</div>
+<div class="item"><i style="background:#84cc16"></i>5-7 Bom</div>
+<div class="item"><i style="background:#f59e0b"></i>3-5 Médio</div>
+<div class="item"><i style="background:#ef4444"></i>0-3 Ruim</div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="sp_data.js"></script>
+<script>
+var map=L.map('map').setView([-23.55,-46.63],11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
+function gc(s){return s>=7?'#10b981':s>=5?'#84cc16':s>=3?'#f59e0b':'#ef4444'}
+var info=document.getElementById('info');
+var gl=L.geoJSON(window.spData,{
+  style:function(f){var s=f.properties.score_geral||5;return{fillColor:gc(s),weight:1.5,color:'#fff',fillOpacity:0.55}},
+  onEachFeature:function(f,layer){
+    layer.on('mouseover',function(e){
+      e.target.setStyle({weight:3,fillOpacity:0.8});
+      var p=f.properties,s=p.score_geral||5;
+      info.innerHTML='<h3>'+p.nm_distrito_municipal+'</h3>'+
+        '<div class="region">'+( p.nm_regiao_05||'')+'</div>'+
+        '<div class="score-big" style="color:'+gc(s)+'">'+s.toFixed(1)+'/10</div>'+
+        '<div class="scores">'+
+        '<div class="sc">🛡️ Segurança <span>'+p.score_seguranca+'</span></div>'+
+        '<div class="sc">💰 Custo <span>'+p.score_custo+'</span></div>'+
+        '<div class="sc">🚇 Transporte <span>'+p.score_transporte+'</span></div>'+
+        '</div>'+
+        '<div class="dados">'+
+        '<p>🏠 Preço m²: R$ '+(p.preco_m2||0).toLocaleString('pt-BR')+'</p>'+
+        '<p>🔫 Roubos: '+p.roubos_100k+'/100k hab</p>'+
+        '<p>💀 Homicídios: '+p.homicidios_100k+'/100k hab</p>'+
+        '<p>🚉 Metrô: '+p.dist_metro_km+' km</p>'+
+        '</div>';
+    });
+    layer.on('mouseout',function(e){gl.resetStyle(e.target)});
+  }
+}).addTo(map);
+</script>
 </body>
 </html>
