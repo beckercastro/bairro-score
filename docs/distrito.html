@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BairroScore</title>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f9fafb;color:#1a1a1a}
+.container{max-width:700px;margin:0 auto;padding:20px}
+h1{font-size:24px;margin-bottom:4px}
+.subtitle{color:#666;font-size:14px;margin-bottom:20px}
+.score-card{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:20px}
+.score-big{font-size:48px;font-weight:700}
+.score-label{font-size:14px;color:#666}
+.scores-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0}
+.sc{background:#f5f5f5;padding:12px;border-radius:8px;text-align:center}
+.sc .val{font-size:22px;font-weight:700}
+.sc .lbl{font-size:11px;color:#666;margin-top:4px}
+.dados{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.dados h2{font-size:16px;margin-bottom:12px}
+.dados p{margin:8px 0;font-size:14px;color:#444}
+.dados p span{font-weight:600}
+.nav{margin:20px 0;font-size:13px}
+.nav a{color:#10b981;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="nav"><a href="./">← Voltar ao mapa</a></div>
+<div id="content">Carregando...</div>
+</div>
+<script>
+function gc(s){return s>=9?'#10b981':s>=8?'#84cc16':s>=7?'#f59e0b':'#ef4444'}
+function lb(s){return s>=9?'Excelente':s>=8?'Bom':s>=7?'Regular':'Ruim'}
+
+var slug = new URLSearchParams(window.location.search).get('d');
+if(!slug){document.getElementById('content').innerHTML='<p>Distrito não encontrado</p>';}
+else{
+  fetch('municipios/sao-paulo.json')
+    .then(function(r){return r.json()})
+    .then(function(data){
+      var feat = data.features.find(function(f){
+        return f.properties.nm_distrito_municipal.toLowerCase().replace(/ /g,'-') === slug;
+      });
+      if(!feat){document.getElementById('content').innerHTML='<p>Distrito não encontrado</p>';return;}
+      var p = feat.properties;
+      var sg = p.score_geral;
+      var color = gc(sg);
+      document.title = 'Morar em '+p.nm_distrito_municipal.replace(/\b\w/g,function(l){return l.toUpperCase()})+' — Score '+sg+'/10 | BairroScore';
+      var nome = p.nm_distrito_municipal.replace(/\b\w/g,function(l){return l.toUpperCase()});
+      document.getElementById('content').innerHTML = 
+        '<h1>'+nome+'</h1>'+
+        '<p class="subtitle">São Paulo, SP · '+(p.nm_regiao_05||'')+'</p>'+
+        '<div class="score-card">'+
+        '<span class="score-big" style="color:'+color+'">'+sg+'</span>'+
+        '<span class="score-label"> / 10 — '+lb(sg)+'</span>'+
+        '<div class="scores-grid">'+
+        '<div class="sc"><div class="val">'+p.score_seguranca+'</div><div class="lbl">🛡️ Segurança</div></div>'+
+        '<div class="sc"><div class="val">'+p.score_custo+'</div><div class="lbl">💰 Custo</div></div>'+
+        '<div class="sc"><div class="val">'+p.score_transporte+'</div><div class="lbl">🚇 Transporte</div></div>'+
+        '<div class="sc"><div class="val">'+(p.score_verde||'?')+'</div><div class="lbl">🌳 Áreas verdes</div></div>'+
+        '<div class="sc"><div class="val">'+(p.score_comercio||'?')+'</div><div class="lbl">🏪 Comércio</div></div>'+
+        '</div></div>'+
+        '<div class="dados"><h2>Dados de '+nome+'</h2>'+
+        '<p>🏠 <span>Preço m²:</span> R$ '+(p.preco_m2||0).toLocaleString('pt-BR')+'</p>'+
+        '<p>🔫 <span>Roubos:</span> '+p.roubos_100k+'/100k habitantes</p>'+
+        '<p>💀 <span>Homicídios:</span> '+p.homicidios_100k+'/100k habitantes</p>'+
+        '<p>🚉 <span>Metrô:</span> '+p.dist_metro_km+' km</p>'+
+        '<p>🌳 <span>Área verde:</span> '+(p.area_verde_m2_hab||'?')+' m²/habitante</p>'+
+        '<p>🏪 <span>Comércio:</span> '+(p.comercio_km2||'?')+' estabelecimentos/km²</p>'+
+        '</div>'+
+        '<div class="nav" style="margin-top:30px;text-align:center">'+
+        '<p style="color:#999;font-size:11px">Dados: SSP-SP 2024 · FipeZap 2025 · SVMA · Junta Comercial</p>'+
+        '<a href="./">Ver todos os distritos no mapa</a></div>';
+    });
+}
+</script>
+</body>
+</html>

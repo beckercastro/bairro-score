@@ -91,7 +91,7 @@ function addDistricts(geojson) {
       layer.on('mouseout', function(e) { layer.setStyle({weight:1.5, fillOpacity:0.55}); });
       layer.on('click', function() {
         var slug = f.properties.nm_distrito_municipal.toLowerCase().replace(/ /g,'-');
-        window.location = 'sp/' + slug + '.html';
+        window.location = 'distrito.html?d=' + slug;
       });
     }
   }).addTo(map);
