@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         #map { width: 100%; height: 100vh; }
         .score-popup { min-width: 300px; }
         .score-popup h3 { margin-bottom: 4px; font-size: 18px; color: #1a1a1a; }
@@ -48,8 +48,8 @@
         .header p { font-size: 13px; color: #666; }
         .tooltip-label {
             background: none !important; border: none !important; box-shadow: none !important;
-            font-weight: 700; font-size: 12px; color: #333;
-            text-shadow: 0 0 3px white, 0 0 3px white, 0 0 3px white, 0 0 3px white;
+            font-weight: 700; font-size: 12px; color: #1a1a1a;
+            text-shadow: 0 0 4px white, 0 0 4px white, 0 0 4px white, 0 0 4px white;
         }
     </style>
 </head>
@@ -70,70 +70,8 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="bairros_data.js"></script>
     <script>
-        // Limite real do município de Cotia (IBGE)
-        const cotiaBoundary = [[-23.5687729736, -46.9026008959], [-23.5693916381, -46.8839645285], [-23.5656378229, -46.8758109894], [-23.5709625399, -46.8752878977], [-23.571971642, -46.8711805902], [-23.5778473098, -46.8642705651], [-23.5818307329, -46.8511460049], [-23.5828072254, -46.8435371924], [-23.577430527, -46.8434270632], [-23.5766949054, -46.8342120512], [-23.5842011343, -46.8225447942], [-23.5819886271, -46.8168648448], [-23.5932425304, -46.8128421385], [-23.6003177008, -46.8174518799], [-23.6089480216, -46.8075726809], [-23.6089489685, -46.8079052156], [-23.6268046158, -46.8390777915], [-23.619924105, -46.8473431849], [-23.6191535823, -46.853796025], [-23.6120388584, -46.8559811737], [-23.6210428417, -46.8685143456], [-23.6191989688, -46.8839635461], [-23.6242757155, -46.8874958437], [-23.6302592313, -46.9060770574], [-23.6425436487, -46.9085381509], [-23.6537609769, -46.9168669724], [-23.6598391335, -46.9171808055], [-23.6631672132, -46.9033426891], [-23.6688380622, -46.901578459], [-23.6677403852, -46.8866064231], [-23.6773060588, -46.8970403284], [-23.6801323203, -46.8951218586], [-23.7145082206, -46.9053813172], [-23.7248829814, -46.9150271721], [-23.7260351321, -46.9213736417], [-23.7311678373, -46.922522826], [-23.7330012775, -46.9315311678], [-23.7386233726, -46.9335065966], [-23.7491589322, -46.927108501], [-23.7529094337, -46.9304719756], [-23.7580457407, -46.9288761029], [-23.7654481891, -46.9354901294], [-23.7718149812, -46.934087664], [-23.7763118332, -46.9377648614], [-23.786247139, -46.9409968486], [-23.7855085915, -46.9484243702], [-23.7919629181, -46.950169894], [-23.7919109833, -46.9576724868], [-23.7833345665, -46.9655270815], [-23.7743291794, -46.9673714435], [-23.7834011013, -46.9817037083], [-23.7944689489, -46.9807242484], [-23.8011291036, -46.9888512661], [-23.8020848153, -46.9968246256], [-23.7912976099, -47.0078819483], [-23.7916623588, -47.0140661695], [-23.7851252061, -47.0206404338], [-23.7745747992, -47.0228388437], [-23.768820263, -47.0315314913], [-23.7568707569, -47.0281431991], [-23.7574066482, -47.0342017521], [-23.7531092573, -47.0358153074], [-23.7369712173, -47.0327987639], [-23.7342139129, -47.0470626041], [-23.7199099218, -47.0521146194], [-23.7180226227, -47.0558419519], [-23.708141834, -47.0620017996], [-23.7014702435, -47.0589801932], [-23.6819811002, -47.0617026349], [-23.6805589316, -47.0733278248], [-23.6802340566, -47.0759824061], [-23.672899, -47.0765219277], [-23.6666688869, -47.0845843138], [-23.6527811414, -47.0812515235], [-23.6531219316, -47.0782630487], [-23.6516514103, -47.0735755399], [-23.6450727234, -47.0724741954], [-23.6458016436, -47.0666804825], [-23.6420922045, -47.0608667283], [-23.6280298009, -47.0588760327], [-23.6311096226, -47.0448608125], [-23.6362725013, -47.0432258203], [-23.6431486451, -47.0335249041], [-23.6438399104, -47.0233673152], [-23.6564198592, -47.0171129329], [-23.655564657, -47.0120221047], [-23.661915747, -47.0040083087], [-23.6604708551, -46.9958800327], [-23.6695219064, -46.995150068], [-23.6648534222, -46.9879420887], [-23.653264621, -46.9864923831], [-23.6448881608, -46.991134155], [-23.6324567358, -46.9869256975], [-23.6084623032, -46.9904340829], [-23.6015520707, -46.9816459604], [-23.6023353268, -46.9609898331], [-23.5907866992, -46.9564575386], [-23.5863424557, -46.9484214036], [-23.5714140427, -46.9398193235], [-23.5632993289, -46.9289674426], [-23.5627996947, -46.9109308811], [-23.5687729736, -46.9026008959]];
-
-        // Bairros com polígonos mais precisos baseados na geografia real
-        const bairros = [
-            {
-                nome: "Caucaia do Alto",
-                score_geral: 5.5,
-                scores: { seguranca: 4.5, custo: 7.8, educacao: 8.2, transporte: 2.1 },
-                dados: { preco_m2: "R$ 2.500/m²", aluguel: "R$ 1.100 (2q)", tipo: "Casas e terrenos rurais/semi-rurais", dist_metro: "35 km (Butantã - L4)" },
-                polygon: [
-                    [-23.635, -47.050], [-23.625, -47.010], [-23.635, -46.985],
-                    [-23.660, -46.975], [-23.690, -46.980], [-23.710, -47.000],
-                    [-23.720, -47.030], [-23.710, -47.060], [-23.690, -47.075],
-                    [-23.665, -47.080], [-23.645, -47.070]
-                ]
-            },
-            {
-                nome: "Granja Viana",
-                score_geral: 5.4,
-                scores: { seguranca: 4.5, custo: 1.8, educacao: 8.2, transporte: 6.6 },
-                dados: { preco_m2: "R$ 6.500/m²", aluguel: "R$ 2.800 (2q)", tipo: "Casas em condomínio fechado", dist_metro: "15 km (Butantã - L4)" },
-                polygon: [
-                    [-23.565, -46.870], [-23.568, -46.845], [-23.575, -46.825],
-                    [-23.590, -46.820], [-23.605, -46.830], [-23.610, -46.850],
-                    [-23.605, -46.875], [-23.590, -46.885], [-23.575, -46.880]
-                ]
-            },
-            {
-                nome: "Centro",
-                score_geral: 5.8,
-                scores: { seguranca: 4.5, custo: 5.2, educacao: 8.2, transporte: 5.5 },
-                dados: { preco_m2: "R$ 4.200/m²", aluguel: "R$ 1.600 (2q)", tipo: "Apartamentos e casas", dist_metro: "20 km (Butantã - L4)" },
-                polygon: [
-                    [-23.590, -46.935], [-23.585, -46.915], [-23.592, -46.895],
-                    [-23.605, -46.890], [-23.618, -46.900], [-23.622, -46.920],
-                    [-23.618, -46.940], [-23.605, -46.945], [-23.595, -46.942]
-                ]
-            },
-            {
-                nome: "Jardim da Glória",
-                score_geral: 6.0,
-                scores: { seguranca: 4.5, custo: 6.7, educacao: 8.2, transporte: 5.0 },
-                dados: { preco_m2: "R$ 3.200/m²", aluguel: "R$ 1.300 (2q)", tipo: "Casas residenciais", dist_metro: "22 km (Butantã - L4)" },
-                polygon: [
-                    [-23.618, -46.945], [-23.610, -46.930], [-23.618, -46.915],
-                    [-23.632, -46.918], [-23.640, -46.930], [-23.638, -46.948],
-                    [-23.630, -46.955], [-23.622, -46.952]
-                ]
-            },
-            {
-                nome: "Parque São George",
-                score_geral: 6.0,
-                scores: { seguranca: 4.5, custo: 7.0, educacao: 8.2, transporte: 4.8 },
-                dados: { preco_m2: "R$ 3.000/m²", aluguel: "R$ 1.200 (2q)", tipo: "Casas populares", dist_metro: "23 km (Butantã - L4)" },
-                polygon: [
-                    [-23.625, -46.960], [-23.620, -46.948], [-23.630, -46.938],
-                    [-23.642, -46.942], [-23.648, -46.955], [-23.645, -46.968],
-                    [-23.638, -46.972], [-23.628, -46.968]
-                ]
-            }
-        ];
-
         function getColor(score) {
             if (score >= 7) return '#10b981';
             if (score >= 6) return '#84cc16';
@@ -141,39 +79,39 @@
             return '#ef4444';
         }
 
-        const map = L.map('map').setView([-23.63, -46.94], 12);
+        const map = L.map('map').setView([-23.66, -46.94], 12);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // Desenhar limite do município (borda cinza tracejada)
+        // Limite do município (borda)
         L.polygon(cotiaBoundary, {
-            color: '#666',
-            weight: 2,
-            dashArray: '8, 6',
-            fillColor: '#000',
-            fillOpacity: 0.03,
+            color: '#444',
+            weight: 2.5,
+            dashArray: '6, 4',
+            fillColor: 'transparent',
+            fillOpacity: 0,
             interactive: false
         }).addTo(map);
 
-        // Desenhar bairros
+        // Regiões coloridas preenchendo todo o município
         bairros.forEach(b => {
             const color = getColor(b.score_geral);
 
             const poly = L.polygon(b.polygon, {
-                color: color,
-                weight: 3,
+                color: '#fff',
+                weight: 2,
                 fillColor: color,
-                fillOpacity: 0.30,
-                smoothFactor: 1.5
+                fillOpacity: 0.45,
+                smoothFactor: 1
             }).addTo(map);
 
             poly.bindPopup(`
                 <div class="score-popup">
                     <h3>${b.nome}</h3>
                     <div class="subtitle">Cotia, SP</div>
-                    <div class="score-geral" style="background:${color}15; color:${color}; border: 2px solid ${color}">
+                    <div class="score-geral" style="background:${color}20; color:${color}; border: 2px solid ${color}">
                         ${b.score_geral}
                     </div>
                     <span style="font-size:13px; color:#666; margin-left:8px;">/ 10</span>
@@ -192,15 +130,17 @@
                 </div>
             `);
 
-            poly.on('mouseover', function() { this.setStyle({ fillOpacity: 0.50, weight: 4 }); });
-            poly.on('mouseout', function() { this.setStyle({ fillOpacity: 0.30, weight: 3 }); });
+            poly.on('mouseover', function() { this.setStyle({ fillOpacity: 0.65, weight: 3 }); });
+            poly.on('mouseout', function() { this.setStyle({ fillOpacity: 0.45, weight: 2 }); });
 
             const center = poly.getBounds().getCenter();
-            const tooltip = L.tooltip({
+            poly.bindTooltip(`${b.score_geral} · ${b.nome}`, {
                 permanent: true, direction: 'center', className: 'tooltip-label'
-            }).setContent(`${b.score_geral} · ${b.nome}`);
-            poly.bindTooltip(tooltip);
+            });
         });
+
+        // Fit map to Cotia bounds
+        map.fitBounds(L.polygon(cotiaBoundary).getBounds().pad(0.05));
     </script>
 </body>
 </html>
